@@ -8,7 +8,7 @@
 
 ## What it is
 
-Auditar Skills is an open kit to check your agent's skills, the folders with a SKILL.md file that Claude Code and Codex use to do a task the same way every time. It ships skill-creator-plus, a RoboNuggets skill that checks each skill against 46 Anthropic rules, plus a five-step INEMA recipe: run the validator, take the five worst, generate a report, test with and without the skill and turn on a hook. It is for anyone who already has several skills and does not know which ones are broken. All it needs is Python 3.8 or newer, and no skill changes without your approval.
+Auditar Skills is an open kit to check your agent's skills, the folders with a SKILL.md file that Claude Code and Codex use to do a task the same way every time. It ships skill-creator-plus, a RoboNuggets skill that checks each skill against 46 rules (most from Anthropic's official docs, some from practice), plus a five-step INEMA recipe: run the validator, take the five worst, generate a report, test with and without the skill and turn on a hook. It is for anyone who already has several skills and does not know which ones are broken. All it needs is Python 3.8 or newer, and no skill changes without your approval.
 
 ## 📖 User guide
 
@@ -91,7 +91,7 @@ tests/test_validador_ptes.py   INEMA: test of the PT/ES validator changes
 guia/                          guide in PT, EN and ES (GitHub Pages)
 ```
 
-The 46 rules, each with its source in Anthropic's documentation, are in the [original README](skill-creator-plus/README.md#the-rules) and in [skill-creator-plus/references/audit-checklist.md](skill-creator-plus/references/audit-checklist.md).
+The 46 rules, each with its source (Anthropic's documentation or, for the NM and LB families, the author's practice), are in the [original README](skill-creator-plus/README.md#the-rules) and in [skill-creator-plus/references/audit-checklist.md](skill-creator-plus/references/audit-checklist.md).
 
 ## Credits and license
 

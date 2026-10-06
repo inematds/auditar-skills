@@ -8,7 +8,7 @@
 
 ## Qué es
 
-Auditar Skills es un kit abierto para revisar las skills de tu agente, las carpetas con un archivo SKILL.md que Claude Code y Codex usan para hacer una tarea siempre de la misma manera. Incluye skill-creator-plus, una skill de RoboNuggets que revisa cada skill contra 46 reglas de Anthropic, y una receta de INEMA en cinco pasos: correr el validador, tomar las cinco peores, generar un informe, probar con y sin la skill y activar un hook. Sirve para quien ya tiene varias skills y no sabe cuáles están rotas. Solo necesita Python 3.8 o más reciente, y ninguna skill cambia sin tu aprobación.
+Auditar Skills es un kit abierto para revisar las skills de tu agente, las carpetas con un archivo SKILL.md que Claude Code y Codex usan para hacer una tarea siempre de la misma manera. Incluye skill-creator-plus, una skill de RoboNuggets que revisa cada skill contra 46 reglas (la mayoría de la documentación oficial de Anthropic, algunas de la práctica), y una receta de INEMA en cinco pasos: correr el validador, tomar las cinco peores, generar un informe, probar con y sin la skill y activar un hook. Sirve para quien ya tiene varias skills y no sabe cuáles están rotas. Solo necesita Python 3.8 o más reciente, y ninguna skill cambia sin tu aprobación.
 
 ## 📖 Guía de uso
 
@@ -91,7 +91,7 @@ tests/test_validador_ptes.py   INEMA: prueba de los cambios PT/ES del validador
 guia/                          guía PT, EN y ES (GitHub Pages)
 ```
 
-Las 46 reglas, con la fuente de cada una en la documentación de Anthropic, están en el [README original](skill-creator-plus/README.md#the-rules) y en [skill-creator-plus/references/audit-checklist.md](skill-creator-plus/references/audit-checklist.md) (en inglés).
+Las 46 reglas, con la fuente de cada una (documentación de Anthropic o, en las familias NM y LB, práctica del autor), están en el [README original](skill-creator-plus/README.md#the-rules) y en [skill-creator-plus/references/audit-checklist.md](skill-creator-plus/references/audit-checklist.md) (en inglés).
 
 ## Créditos y licencia
 

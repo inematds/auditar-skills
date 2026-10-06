@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Auditar Skills — mide antes de reescribir</title>
-<meta name="description" content="Espejo INEMA de skill-creator-plus (MIT, RoboNuggets): valida tus skills de Claude Code y Codex contra 46 reglas de Anthropic, con una receta en cinco pasos, informe de las peores y hook de validación.">
+<meta name="description" content="Espejo INEMA de skill-creator-plus (MIT, RoboNuggets): valida tus skills de Claude Code y Codex contra 46 reglas (la mayoría de la documentación oficial de Anthropic), con una receta en cinco pasos, informe de las peores y hook de validación.">
 <link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/auditar-skills/guia/">
 <link rel="alternate" hreflang="en" href="https://inematds.github.io/auditar-skills/guia/en/">
 <link rel="alternate" hreflang="es" href="https://inematds.github.io/auditar-skills/guia/es/">
@@ -129,19 +129,19 @@
     <div>
       <span class="chip">Skills de Claude Code y Codex · validador abierto</span>
       <h1>Mide antes de <span class="amb">reescribir</span> tus skills</h1>
-      <p class="lead">46 reglas de Anthropic, un validador que corre en un segundo y una receta en cinco pasos para encontrar y corregir las skills que más fallan, sin tocar nada que no hayas aprobado.</p>
+      <p class="lead">46 reglas, la mayoría de la documentación oficial de Anthropic y algunas de la práctica, un validador que corre en un segundo y una receta en cinco pasos para encontrar y corregir las skills que más fallan, sin tocar nada que no hayas aprobado.</p>
       <div class="cta">
         <a class="btn" href="#guia">Empezar la guía</a>
         <a class="btn ghost" href="https://github.com/inematds/auditar-skills" target="_blank" rel="noopener">Ver en GitHub</a>
       </div>
     </div>
-    <figure><img src="../assets/banner-es.jpg" alt="Banner Auditar Skills: mide antes de reescribir, 46 reglas de Anthropic"></figure>
+    <figure><img src="../assets/banner-es.jpg" alt="Banner Auditar Skills: mide antes de reescribir, 46 reglas"></figure>
   </div>
 </header>
 
 <section id="resumo" class="resumo"><div class="wrap">
   <span class="chip">En resumen</span>
-  <p>Auditar Skills es un kit abierto para revisar las skills de tu agente, las carpetas con un archivo SKILL.md que Claude Code y Codex usan para hacer una tarea siempre de la misma manera. Incluye skill-creator-plus, una skill de RoboNuggets que revisa cada skill contra 46 reglas de Anthropic, y una receta de INEMA en cinco pasos: correr el validador, tomar las cinco peores, generar un informe, probar con y sin la skill y activar un hook. Sirve para quien ya tiene varias skills y no sabe cuáles están rotas. Solo necesita Python 3.8 o más reciente, y ninguna skill cambia sin tu aprobación.</p>
+  <p>Auditar Skills es un kit abierto para revisar las skills de tu agente, las carpetas con un archivo SKILL.md que Claude Code y Codex usan para hacer una tarea siempre de la misma manera. Incluye skill-creator-plus, una skill de RoboNuggets que revisa cada skill contra 46 reglas (la mayoría de la documentación oficial de Anthropic, algunas de la práctica), y una receta de INEMA en cinco pasos: correr el validador, tomar las cinco peores, generar un informe, probar con y sin la skill y activar un hook. Sirve para quien ya tiene varias skills y no sabe cuáles están rotas. Solo necesita Python 3.8 o más reciente, y ninguna skill cambia sin tu aprobación.</p>
 </div></section>
 
 <section id="oque"><div class="wrap">
@@ -150,7 +150,7 @@
   <p class="sub">El skill-creator-plus original, más lo que INEMA agregó para usarlo en el día a día, incluido un validador que entiende skills en portugués y español.</p>
   <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="../assets/banner-grade-es.jpg" alt="Banner Auditar Skills: validador, 5 peores, informe, con y sin, hook, 46 reglas" loading="lazy" style="width:100%;display:block"></figure>
   <div class="grid g3">
-    <div class="card"><h3>📏 46 reglas con fuente</h3><p>Cada regla apunta a la página de Anthropic de donde salió (guía de skills, docs de Claude Code, guía de prompting de Fable 5 y Opus 5.5). Las que vienen de la práctica están marcadas como consejo.</p></div>
+    <div class="card"><h3>📏 46 reglas con fuente</h3><p>La mayoría viene de la documentación oficial de Anthropic (guía de skills, docs de Claude Code, guía de prompting de Fable 5 y Opus 5.5), con el enlace de cada una; algunas, como las familias NM y LB, vienen de la práctica del autor y están marcadas como consejo. 20 son solo de lectura, juzgadas por el agente.</p></div>
     <div class="card"><h3>⚡ Validador en un segundo</h3><p><code>validate_skill.py</code> en Python puro, sin instalar nada. Revisa la parte mecánica de una skill o de una carpeta entera e indica archivo y línea de cada problema. Solo lee; no modifica nada.</p></div>
     <div class="card"><h3>🧭 Receta INEMA</h3><p>Cinco pasos para no auditar todo de una vez: validador, cinco peores, informe, prueba con y sin, hook. Con dos scripts nuevos: <code>relatorio.py</code> y <code>hook_validar.py</code>.</p></div>
   </div>

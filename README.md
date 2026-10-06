@@ -8,7 +8,7 @@
 
 ## O que é
 
-Auditar Skills é um kit aberto para conferir as skills do seu agente, as pastas com um arquivo SKILL.md que o Claude Code e o Codex usam para fazer uma tarefa sempre do mesmo jeito. Ele traz o skill-creator-plus, uma skill da RoboNuggets que confere cada skill contra 46 regras da Anthropic, e uma receita do INEMA em cinco passos: rodar o validador, pegar as cinco piores, gerar um relatório, testar com e sem a skill e ligar um hook. Serve para quem já tem várias skills e não sabe quais estão quebradas. Precisa só de Python 3.8 ou mais novo, e nenhuma skill muda sem você aprovar.
+Auditar Skills é um kit aberto para conferir as skills do seu agente, as pastas com um arquivo SKILL.md que o Claude Code e o Codex usam para fazer uma tarefa sempre do mesmo jeito. Ele traz o skill-creator-plus, uma skill da RoboNuggets que confere cada skill contra 46 regras (a maioria da documentação oficial da Anthropic, algumas da prática), e uma receita do INEMA em cinco passos: rodar o validador, pegar as cinco piores, gerar um relatório, testar com e sem a skill e ligar um hook. Serve para quem já tem várias skills e não sabe quais estão quebradas. Precisa só de Python 3.8 ou mais novo, e nenhuma skill muda sem você aprovar.
 
 ## 📖 Guia de uso
 
@@ -91,7 +91,7 @@ tests/test_validador_ptes.py   INEMA: teste das mudanças PT/ES no validador
 guia/                          guia PT, EN e ES (GitHub Pages)
 ```
 
-As 46 regras, com a fonte de cada uma na documentação da Anthropic, estão no [README original](skill-creator-plus/README.md#the-rules) e em [skill-creator-plus/references/audit-checklist.md](skill-creator-plus/references/audit-checklist.md) (em inglês).
+As 46 regras, com a fonte de cada uma (documentação da Anthropic ou, nas famílias NM e LB, prática do autor), estão no [README original](skill-creator-plus/README.md#the-rules) e em [skill-creator-plus/references/audit-checklist.md](skill-creator-plus/references/audit-checklist.md) (em inglês).
 
 ## Créditos e licença
 
