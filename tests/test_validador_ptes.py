@@ -48,6 +48,14 @@ class TestDS3(unittest.TestCase):
         d = "Gera relatórios semanais de vendas a partir da planilha do time. Gatilhos: relatório da semana, vendas."
         self.assertNotIn(("WARN", "DS3"), rodar(d))
 
+    def test_acione_quando(self):
+        d = "Gera relatórios semanais de vendas a partir da planilha do time. Acione também quando pedirem vendas."
+        self.assertNotIn(("WARN", "DS3"), rodar(d))
+
+    def test_aciona_sem_quando_continua_avisando(self):
+        d = "Aciona o deploy da aplicação no servidor de produção e confere os logs depois de publicar a versão."
+        self.assertIn(("WARN", "DS3"), rodar(d))
+
     def test_sem_pista_continua_avisando(self):
         d = "Gera relatórios semanais de vendas a partir da planilha do time com gráficos e totais por região."
         self.assertIn(("WARN", "DS3"), rodar(d))

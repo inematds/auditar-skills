@@ -67,11 +67,11 @@ The original `validate_skill.py` only recognises English and raised false alarms
 
 | Rule | Original | In the INEMA mirror |
 |---|---|---|
-| DS3 (when to use) | only "Use when…", "whenever", "triggers on"… | also accepts "Use quando…", "quando usar", "sempre que", "Gatilhos", "acione", "Úsala cuando…", "cuando el usuario", "disparadores" |
+| DS3 (when to use) | only "Use when…", "whenever", "triggers on"… | also accepts "Use quando…", "quando usar", "sempre que", "Gatilhos", "acione quando", "Úsala cuando…", "cuando el usuario", "disparadores" |
 | ST5 (contents list) | only the heading "Contents" / "Table of contents" | also accepts "Sumário", "Índice", "Conteúdo", "Contenido", "Tabla de contenido(s)" |
 | CT9 (TODO) | any upper-case "TODO" | "TODO" only when followed by `:` or `(` (or at the end of a line); the Portuguese word "TODO" ("all") no longer counts. FIXME always counts |
 
-Measured on the 123 skills in `~/.claude/skills` (2026-10-06): DS3 went from 75 to 38 warnings, CT9 from 10 to 2 errors, ST5 from 248 to 246. Minimal test: `python3 tests/test_validador_ptes.py` (11 cases, including the ones that must still fail).
+Measured on the 123 skills in `~/.claude/skills` (2026-10-06): DS3 went from 75 to 38 warnings, CT9 from 10 to 2 errors, ST5 from 248 to 246. Minimal test: `python3 tests/test_validador_ptes.py` (13 cases, including the ones that must still fail).
 
 ## What is in the box
 

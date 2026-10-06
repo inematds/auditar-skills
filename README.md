@@ -67,11 +67,11 @@ O `validate_skill.py` original só reconhece inglês e dava alarme falso em skil
 
 | Regra | Original | No espelho INEMA |
 |---|---|---|
-| DS3 (quando usar) | só "Use when…", "whenever", "triggers on"… | aceita também "Use quando…", "quando usar", "sempre que", "Gatilhos", "acione", "Úsala cuando…", "cuando el usuario", "disparadores" |
+| DS3 (quando usar) | só "Use when…", "whenever", "triggers on"… | aceita também "Use quando…", "quando usar", "sempre que", "Gatilhos", "acione quando", "Úsala cuando…", "cuando el usuario", "disparadores" |
 | ST5 (sumário) | só o título "Contents" / "Table of contents" | aceita também "Sumário", "Índice", "Conteúdo", "Contenido", "Tabla de contenido(s)" |
 | CT9 (TODO) | qualquer "TODO" em caixa alta | "TODO" só com `:` ou `(` depois (ou no fim da linha); "quebraria TODO o markup" deixa de contar. FIXME continua valendo sempre |
 
-Efeito medido nas 123 skills de `~/.claude/skills` (6/10/2026): DS3 caiu de 75 para 38 avisos, CT9 de 10 para 2 erros, ST5 de 248 para 246. Teste mínimo: `python3 tests/test_validador_ptes.py` (11 casos, inclusive os que devem continuar falhando).
+Efeito medido nas 123 skills de `~/.claude/skills` (6/10/2026): DS3 caiu de 75 para 38 avisos, CT9 de 10 para 2 erros, ST5 de 248 para 246. Teste mínimo: `python3 tests/test_validador_ptes.py` (13 casos, inclusive os que devem continuar falhando).
 
 ## O que tem dentro
 

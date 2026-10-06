@@ -67,11 +67,11 @@ El `validate_skill.py` original solo reconoce inglés y daba falsas alarmas en s
 
 | Regla | Original | En el espejo INEMA |
 |---|---|---|
-| DS3 (cuándo usar) | solo "Use when…", "whenever", "triggers on"… | acepta también "Use quando…", "quando usar", "sempre que", "Gatilhos", "acione", "Úsala cuando…", "cuando el usuario", "disparadores" |
+| DS3 (cuándo usar) | solo "Use when…", "whenever", "triggers on"… | acepta también "Use quando…", "quando usar", "sempre que", "Gatilhos", "acione quando", "Úsala cuando…", "cuando el usuario", "disparadores" |
 | ST5 (índice) | solo el título "Contents" / "Table of contents" | acepta también "Sumário", "Índice", "Conteúdo", "Contenido", "Tabla de contenido(s)" |
 | CT9 (TODO) | cualquier "TODO" en mayúsculas | "TODO" solo con `:` o `(` después (o al final de la línea); la palabra portuguesa "TODO" ("todo") deja de contar. FIXME cuenta siempre |
 
-Efecto medido en las 123 skills de `~/.claude/skills` (6/10/2026): DS3 bajó de 75 a 38 avisos, CT9 de 10 a 2 errores, ST5 de 248 a 246. Prueba mínima: `python3 tests/test_validador_ptes.py` (11 casos, incluidos los que deben seguir fallando).
+Efecto medido en las 123 skills de `~/.claude/skills` (6/10/2026): DS3 bajó de 75 a 38 avisos, CT9 de 10 a 2 errores, ST5 de 248 a 246. Prueba mínima: `python3 tests/test_validador_ptes.py` (13 casos, incluidos los que deben seguir fallando).
 
 ## Qué hay dentro
 

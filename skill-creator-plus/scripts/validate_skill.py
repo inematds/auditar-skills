@@ -130,7 +130,7 @@ WHEN_CUE_RE = re.compile(
     r"|\b[uú]s(?:e|ar|a|ala|alo|ela|e-a|e-o)\s+(?:(?:esta|essa|a|la)\s+(?:skill\s+)?)?(?:quando|sempre que|cuando|siempre que)\b"
     r"|\b(?:quando|cuando)\s+usar\b|\bsempre que\b|\bsiempre que\b"
     r"|\b(?:quando|cuando)\s+(?:o |a |el |la )?(?:usu[aá]ri[oa]|user|pessoa|persona)\b"
-    r"|\bgatilhos?\b|\bdisparadores?\b|\bacion(?:e|ar|a)\b|\bact[ií]v(?:e|ar|a)la\b",
+    r"|\bgatilhos?\b|\bdisparadores?\b|\bacion\w*\s+(?:tamb[eé]m\s+)?(?:quando|se|para)\b|\bact[ií]v\w*\s+(?:tambi[eé]n\s+)?(?:cuando|si|para)\b",
     re.I)
 XML_TAG_RE = re.compile(r"<\s*/?\s*[A-Za-z][\w:-]*(?:\s[^<>]*)?/?>")
 MONTHS = (r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?"
