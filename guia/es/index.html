@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auditar Skills — mide antes de reescribir</title>
+<meta name="description" content="Espejo INEMA de skill-creator-plus (MIT, RoboNuggets): valida tus skills de Claude Code y Codex contra 46 reglas de Anthropic, con una receta en cinco pasos, informe de las peores y hook de validación.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/auditar-skills/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/auditar-skills/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/auditar-skills/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:760px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(226,162,59,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(226,162,59,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="emoji">🔍</span> Auditar Skills</a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#oque">Qué es</a>
+    <a class="sec" href="#fluxo">Cómo funciona</a>
+    <a class="sec" href="#guia">Guía de uso</a>
+    <a class="sec" href="#exemplos">Ejemplos</a>
+    <a class="sec" href="#roadmap">Roadmap</a>
+    <span class="lang"><a href="../">PT</a><a href="../en/">EN</a><a class="on" href="./">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+    <a class="btn" href="https://github.com/inematds/auditar-skills" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Skills de Claude Code y Codex · validador abierto</span>
+      <h1>Mide antes de <span class="amb">reescribir</span> tus skills</h1>
+      <p class="lead">46 reglas de Anthropic, un validador que corre en un segundo y una receta en cinco pasos para encontrar y corregir las skills que más fallan, sin tocar nada que no hayas aprobado.</p>
+      <div class="cta">
+        <a class="btn" href="#guia">Empezar la guía</a>
+        <a class="btn ghost" href="https://github.com/inematds/auditar-skills" target="_blank" rel="noopener">Ver en GitHub</a>
+      </div>
+    </div>
+    <figure><img src="../assets/banner-es.jpg" alt="Banner Auditar Skills: mide antes de reescribir, 46 reglas de Anthropic"></figure>
+  </div>
+</header>
+
+<section id="resumo" class="resumo"><div class="wrap">
+  <span class="chip">En resumen</span>
+  <p>Auditar Skills es un kit abierto para revisar las skills de tu agente, las carpetas con un archivo SKILL.md que Claude Code y Codex usan para hacer una tarea siempre de la misma manera. Incluye skill-creator-plus, una skill de RoboNuggets que revisa cada skill contra 46 reglas de Anthropic, y una receta de INEMA en cinco pasos: correr el validador, tomar las cinco peores, generar un informe, probar con y sin la skill y activar un hook. Sirve para quien ya tiene varias skills y no sabe cuáles están rotas. Solo necesita Python 3.8 o más reciente, y ninguna skill cambia sin tu aprobación.</p>
+</div></section>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">Qué es</span>
+  <h2>Un espejo con receta</h2>
+  <p class="sub">El skill-creator-plus original, más lo que INEMA agregó para usarlo en el día a día, incluido un validador que entiende skills en portugués y español.</p>
+  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="../assets/banner-grade-es.jpg" alt="Banner Auditar Skills: validador, 5 peores, informe, con y sin, hook, 46 reglas" loading="lazy" style="width:100%;display:block"></figure>
+  <div class="grid g3">
+    <div class="card"><h3>📏 46 reglas con fuente</h3><p>Cada regla apunta a la página de Anthropic de donde salió (guía de skills, docs de Claude Code, guía de prompting de Fable 5 y Opus 5.5). Las que vienen de la práctica están marcadas como consejo.</p></div>
+    <div class="card"><h3>⚡ Validador en un segundo</h3><p><code>validate_skill.py</code> en Python puro, sin instalar nada. Revisa la parte mecánica de una skill o de una carpeta entera e indica archivo y línea de cada problema. Solo lee; no modifica nada.</p></div>
+    <div class="card"><h3>🧭 Receta INEMA</h3><p>Cinco pasos para no auditar todo de una vez: validador, cinco peores, informe, prueba con y sin, hook. Con dos scripts nuevos: <code>relatorio.py</code> y <code>hook_validar.py</code>.</p></div>
+  </div>
+</div></section>
+
+<section id="fluxo"><div class="wrap">
+  <span class="chip">Cómo funciona</span>
+  <h2>Del número a la corrección</h2>
+  <p class="sub">Primero el validador mide; después el agente lee e informa; tú decides qué aplicar; la prueba lo demuestra; el hook lo sostiene.</p>
+  <div class="flow">
+    <span>Validador</span><span class="arr">→</span>
+    <span>5 peores</span><span class="arr">→</span>
+    <span>Informe (AUDIT)</span><span class="arr">→</span>
+    <span>Tú eliges</span><span class="arr">→</span>
+    <span>Prueba con y sin</span><span class="arr">→</span>
+    <span>Hook</span><span class="arr">→</span>
+    <span>Validador de nuevo</span>
+  </div>
+  <div class="grid g4" style="margin-top:26px">
+    <div class="card"><h3>FM · DS</h3><p>Frontmatter que el YAML entiende; nombre y descripción dentro del límite, en tercera persona, diciendo cuándo usarla.</p></div>
+    <div class="card"><h3>ST · CT</h3><p>SKILL.md con menos de 500 líneas, referencias a un solo nivel, índice en archivos largos, nada de enlaces rotos ni TODO.</p></div>
+    <div class="card"><h3>WF · SC</h3><p>Checklist con "listo cuando" y línea de volver atrás; scripts que resuelven el error; paquetes con su línea de instalación.</p></div>
+    <div class="card"><h3>NM · HK · TS · LB</h3><p>Ajustes para los modelos 5.5, regla estricta en hook, pruebas con y sin la skill y una biblioteca sin dos skills peleando por el mismo pedido.</p></div>
+  </div>
+</div></section>
+
+<section id="pre"><div class="wrap">
+  <span class="chip">Requisitos previos</span>
+  <h2>Qué necesitas</h2>
+  <p class="sub">El validador y los scripts usan solo la biblioteca estándar de Python. El agente entra en el informe y en la corrección.</p>
+  <div class="grid g3">
+    <div class="card"><h3>Python 3.8+</h3><p>Linux, Mac o Windows. Nada que instalar con pip.</p><pre><span class="c"># verificar la versión</span>
+<span class="k">python3</span> --version</pre></div>
+    <div class="card"><h3>git</h3><p>Para descargar el repositorio (o baja el ZIP desde GitHub).</p><pre><span class="k">git</span> --version</pre></div>
+    <div class="card"><h3>Claude Code o Codex</h3><p>Solo para los modos AUDIT, NEW y REFINE de la skill. El validador corre sin agente.</p><pre><span class="c"># las skills viven en</span>
+~/.claude/skills   <span class="c"># Claude Code</span>
+~/.agents/skills   <span class="c"># Codex</span></pre></div>
+  </div>
+</div></section>
+
+<section id="guia"><div class="wrap">
+  <span class="chip">Guía de uso · paso a paso</span>
+  <h2>La receta en seis comandos</h2>
+  <p class="sub">Córrelos en orden. Los pasos 2 y 3 solo leen tus skills; el paso 4 solo edita después de que elijas.</p>
+
+  <div class="step"><div class="b">1</div><div>
+    <h3>Descarga el repositorio</h3>
+    <p>Una carpeta en tu directorio personal. Los siguientes comandos se corren desde adentro.</p>
+<pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/auditar-skills</span> ~/auditar-skills
+<span class="k">cd</span> ~/auditar-skills</pre>
+  </div></div>
+
+  <div class="step"><div class="b">2</div><div>
+    <h3>Corre el validador en todas</h3>
+    <p>Una línea por skill: errores, avisos, notas y las reglas incumplidas. Código de salida 0 = sin errores, 1 = hay errores, 2 = no pudo correr.</p>
+<pre><span class="k">python3</span> skill-creator-plus/scripts/validate_skill.py --all ~/.claude/skills   <span class="c"># Claude Code</span>
+<span class="k">python3</span> skill-creator-plus/scripts/validate_skill.py --all ~/.agents/skills   <span class="c"># Codex</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">3</div><div>
+    <h3>Toma las cinco peores</h3>
+    <p><code>relatorio.py</code> ordena por errores y avisos y detalla las N peores, agrupando los hallazgos por regla. O elige las cinco que más usas.</p>
+<pre><span class="k">python3</span> skill-creator-plus/scripts/validate_skill.py --all ~/.claude/skills --json \
+  | <span class="k">python3</span> scripts/relatorio.py - --top 5 > relatorio.md</pre>
+  </div></div>
+
+  <div class="step"><div class="b">4</div><div>
+    <h3>Instala la skill y pide el informe</h3>
+    <p>El modo AUDIT lee la skill completa, marca cada regla (pasa, falla o n/a) con archivo y línea y solo edita lo que apruebes.</p>
+<pre><span class="k">cp -r</span> ~/auditar-skills/skill-creator-plus ~/.claude/skills/   <span class="c"># Codex: ~/.agents/skills/</span>
+<span class="c"># en Claude Code, en una sesión nueva:</span>
+<span class="s">"Audita la skill formato-curso-v2 contra las reglas de Anthropic. Solo el informe, no edites nada."</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">5</div><div>
+    <h3>Prueba con y sin antes de borrar</h3>
+    <p>Los modelos 5.5 suelen rendir mejor con menos instrucciones, pero solo una ejecución comparada demuestra que una línea es peso muerto. Arma dos copias y corre la misma tarea en cada una.</p>
+<pre><span class="k">mkdir -p</span> /tmp/teste-com/.claude/skills /tmp/teste-sem/.claude/skills
+<span class="k">cp -r</span> ~/.claude/skills/minha-skill /tmp/teste-com/.claude/skills/
+<span class="k">cp -r</span> ~/.claude/skills/minha-skill /tmp/teste-sem/.claude/skills/   <span class="c"># borra las líneas candidatas solo aquí</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">6</div><div>
+    <h3>Activa el hook que valida al guardar</h3>
+    <p>Es un ejemplo, no viene instalado. Cada vez que el agente guarde un <code>SKILL.md</code>, corre el validador; si hay errores, el agente recibe la lista y los corrige en el momento. Va en <code>~/.claude/settings.json</code>.</p>
+<pre>{
+  <span class="s">"hooks"</span>: { <span class="s">"PostToolUse"</span>: [ {
+    <span class="s">"matcher"</span>: <span class="s">"Write|Edit"</span>,
+    <span class="s">"hooks"</span>: [ { <span class="s">"type"</span>: <span class="s">"command"</span>,
+      <span class="s">"command"</span>: <span class="s">"python3 ~/auditar-skills/scripts/hook_validar.py"</span>,
+      <span class="s">"timeout"</span>: 60 } ]
+  } ] }
+}</pre>
+    <p>Pruébalo antes de activarlo: código 0 = sin errores, 2 = errores listados. Detalles en <a href="https://github.com/inematds/auditar-skills/blob/main/docs/receita-inema.md" target="_blank" rel="noopener">docs/receita-inema.md</a> (en portugués).</p>
+<pre><span class="k">echo</span> <span class="s">'{"tool_input":{"file_path":"'"$HOME"'/.claude/skills/minha-skill/SKILL.md"}}'</span> \
+  | <span class="k">python3</span> scripts/hook_validar.py; <span class="k">echo</span> <span class="s">"código de salida: $?"</span></pre>
+  </div></div>
+</div></section>
+
+<section id="exemplos"><div class="wrap">
+  <span class="chip">Ejemplos</span>
+  <h2>Salida real</h2>
+  <p class="sub">Corrido sobre copias de cuatro skills de INEMA, en una carpeta temporal, sin tocar las originales. El informe completo está en <a href="https://github.com/inematds/auditar-skills/blob/main/examples/relatorio-inema.md" target="_blank" rel="noopener">examples/relatorio-inema.md</a> (en portugués).</p>
+  <div class="grid g2">
+    <div class="card"><h3>Tabla del validador</h3>
+<pre>Skill             Errors  Warnings  Notes  Rules
+----------------  ------  --------  -----  ------------
+video-ia              16         8      2  ST5 ST6
+media-use             13        11      2  ST4 ST5 ST6 SC5
+formato-curso-v2       5         0      5  DS1 ST5
+clima                  0         1      0  DS3</pre></div>
+    <div class="card"><h3>Fragmento de relatorio.py</h3>
+<pre>### 3. formato-curso-v2
+- <span class="k">DS1</span> (erro, 1x)
+  - SKILL.md:3 description is 1251 characters;
+    the limit is 1024.
+- <span class="k">ST5</span> (erro, 4x)
+  - references/LEARN-LAYER.md is 618 lines
+    with no contents list in its first 50 lines.</pre></div>
+  </div>
+  <p class="sub" style="margin-top:18px">Y el propio skill-creator-plus pasa su validador: 0 errores y 1 aviso (la imagen del banner del README no se menciona en el SKILL.md).</p>
+</div></section>
+
+<section id="roadmap"><div class="wrap">
+  <span class="chip">Roadmap</span>
+  <h2>Dónde está y hacia dónde va</h2>
+  <p class="sub">El espejo sigue al original; la receta crece con el uso en las skills de INEMA.</p>
+  <div class="phase"><div class="tag">Hecho</div><div class="d"><strong>Espejo + receta</strong><span>skill-creator-plus en <code>skill-creator-plus/</code>, validador adaptado a PT/ES (DS3, ST5 y CT9, con prueba), receta INEMA, <code>relatorio.py</code>, <code>hook_validar.py</code>, guía y README en PT, EN y ES.</span></div></div>
+  <div class="phase"><div class="tag">Próximo</div><div class="d"><strong>Correr la receta en las skills de INEMA</strong><span>Empezando por formato-curso-v2, video-ia, media-use y las inemaref-*. Primero las correcciones mecánicas (ST5 índice, ST4 un nivel).</span></div></div>
+  <div class="phase"><div class="tag">Siempre</div><div class="d"><strong>Seguir al original</strong><span>Cuando RoboNuggets actualice las reglas, la carpeta <code>skill-creator-plus/</code> se vuelve a copiar y se reaplica el cambio INEMA en el validador.</span></div></div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">Python 3.8+</div><div class="pill">Claude Code</div><div class="pill">Codex</div><div class="pill">MIT</div>
+    <p style="margin-top:18px">Basado en <a href="https://github.com/robonuggets/skill-creator-plus" target="_blank" rel="noopener">robonuggets/skill-creator-plus</a> (MIT, RoboNuggets). Sin vínculo con Anthropic.</p>
+    <p>Auditar Skills · receta y guía PT/EN/ES ·
+      <a href="https://github.com/inematds/auditar-skills">inematds/auditar-skills</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY='auditar-skills-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    try{ if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      try{ localStorage.setItem(KEY, light?'light':'dark'); }catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>
